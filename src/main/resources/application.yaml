@@ -1,0 +1,48 @@
+# pleopleflw:
+#   mns:
+#     kafka:
+#       consumer-enabled: ${consumer-enabled:true}
+
+example:
+  kafka:
+    consumer-enabled: ${consumer-enabled:false}
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+      platform: h2
+      url: jdbc:h2:mem:erhan
+  jpa:
+    show-sql: true           
+  kafka:
+    bootstrap-servers: ${kafka_bootstrap_servers:kafka:9093}
+    properties:
+      sasl:
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${kafka_username:'admin'} password=${kafka_password:'admin-secret'};
+        mechanism: PLAIN
+      security:
+        protocol: PLAINTEXT
+    consumer:
+      auto-offset-reset: earliest
+      group-id: example
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 1
+      fetch-max-wait: 36000
+      enable-auto-commit: false
+      client-id: example
+    producer:
+      client-id: example
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 2
+    jaas:
+      enabled: true
+    listener:
+      poll-timeout: 1800000
+      concurrency: 1
+      ack-mode: manual_immediate
