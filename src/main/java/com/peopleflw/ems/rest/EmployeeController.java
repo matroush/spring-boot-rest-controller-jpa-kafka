@@ -18,7 +18,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
 
-    @PostMapping("/employees")
+ @PostMapping("/employees")
 public Employee createEmployee(@RequestBody Employee Employee) {
 	Employee savedEmployee = employeeService.save(Employee);
 
@@ -32,7 +32,7 @@ public ResponseEntity<String> inCheckEmployee(@PathVariable("id") int id) {
    
     try {
         employeeService.changEmployeeState(id,EmployeeState.In_CHECK);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("State Updated Successfuly",HttpStatus.OK);
     } catch (Exception e) {
     
         return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,20 +45,20 @@ public ResponseEntity<String> approveEmployee(@PathVariable("id") int id) {
    
     try {
         employeeService.changEmployeeState(id,EmployeeState.APPROVED);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("State Updated Successfuly" , HttpStatus.OK);
     } catch (Exception e) {
     
         return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
 }
-@PostMapping("/employees/{id}/state/terminate")
+@PostMapping("/employees/{id}/state/active")
 public ResponseEntity<String> activateEmployee(@PathVariable("id") int id) {
 
    
     try {
         employeeService.changEmployeeState(id,EmployeeState.ACTIVE);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("State Updated Successfuly", HttpStatus.OK);
     } catch (Exception e) {
     
         return new ResponseEntity<>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
